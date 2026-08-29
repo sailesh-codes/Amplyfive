@@ -10,33 +10,71 @@ Instead of generic "make it look good" instructions, agents can invoke specific 
 
 ## Quick start
 
-Install skills directly into your AI agent's configuration:
+Install skills directly into your AI agent's configuration with a single command:
 
 ```bash
-# Install a frontend design skill
-npx skills add https://github.com/amplyfive/skills --skill design-taste-frontend
+# Install a skill into ALL detected agents on your machine
+npx amplyfive add web-dev-portfolio
 
-# Install a backend API skill
-npx skills add https://github.com/amplyfive/skills --skill java-spring-boot-api
+# Install for a specific agent
+npx amplyfive add web-dev-portfolio --agent claude
+npx amplyfive add e-commerce --agent cursor
 
-# Install a DevOps skill
-npx skills add https://github.com/amplyfive/skills --skill github-actions-ci
+# Install multiple skills at once
+npx amplyfive add landing-page portfolio e-commerce
+
+# Install into your project directory instead of global config
+npx amplyfive add web-dev-portfolio --local
+
+# List all available skills
+npx amplyfive list
+
+# See which agents are detected on your machine
+npx amplyfive agents
+
+# Remove a skill
+npx amplyfive remove web-dev-portfolio
 ```
 
-Each skill can be invoked by your AI agent when working on relevant tasks, providing context-specific guidance and patterns.
+The CLI auto-detects which coding agents you have installed and writes skills into the correct config location for each one. No manual file copying needed.
+
+## Supported agents
+
+Amplyfive works with **10 AI coding agents** out of the box:
+
+| Agent | Global Config | Project Config |
+|---|---|---|
+| **Claude Code** | `~/.claude/skills/` | `.claude/skills/` |
+| **Cursor** | *(project-only)* | `.cursor/rules/*.mdc` |
+| **OpenAI Codex** | `~/.codex/AGENTS.md` | `AGENTS.md` |
+| **Gemini CLI** | `~/.gemini/config/skills/` | `.agents/skills/` |
+| **Windsurf** | `~/.windsurf/rules/` | `.windsurf/rules/` |
+| **Cline** | `~/.cline/rules/` | `.clinerules/` |
+| **GitHub Copilot** | *(project-only)* | `.github/copilot-instructions.md` |
+| **Aider** | `~/CONVENTIONS.md` | `CONVENTIONS.md` |
+| **Devin** | `~/.config/devin/` | `.devin/skills/` |
+| **Zed** | `~/.config/zed/AGENTS.md` | `AGENTS.md` |
 
 ## Available skills
 
-Skills are organized under the `skills/` directory, each in its own folder with a `SKILL.md` file:
+### Page / Landing
+- **landing-page** – High-converting landing page frontends with brand-specific hierarchy and responsive behavior
+- **e-commerce** – E-commerce frontends with catalog presentation, cart/checkout friction reduction, and trust signals
+- **portfolio** – Distinctive portfolio websites with work presentation adapted to the owner and audience
+- **web-dev-portfolio** – Web developer portfolio frontends that eliminate AI template clichés and elevate technical depth
+- **admin-dashboard** – Admin dashboard patterns *(coming soon)*
 
-- **design-taste-frontend** – UI/UX patterns for modern, polished frontend interfaces
-- **java-spring-boot-api** – Best practices for building robust Spring Boot APIs
-- **github-actions-ci** – CI/CD workflow patterns and GitHub Actions configurations
-- **docker-basics** – Containerization patterns and Docker best practices
-- **typescript-strict-mode** – Type-safe TypeScript patterns and configurations
-- **testing-pyramid** – Testing strategies and test organization patterns
+### Animation
+- **gsap** – GSAP animation patterns with ScrollTrigger and timeline orchestration *(coming soon)*
+- **framer** – Framer Motion patterns for React *(coming soon)*
+- **anime-js** – Anime.js timeline staggering and SVG morphing *(coming soon)*
+- **lenis** – Lenis smooth scroll with GSAP integration *(coming soon)*
+- **three-js** – Three.js 3D scene patterns *(coming soon)*
+- **vanilla-js** – Vanilla JS animation with Web Animations API *(coming soon)*
+- **shadcn** – shadcn/ui animation patterns *(coming soon)*
+- **tailwind** – Tailwind CSS animation utilities *(coming soon)*
 
-*More skills added regularly. Check the `skills/` directory for the full list.*
+*More skills added regularly. Run `npx amplyfive list` for the latest.*
 
 ## Who is this for?
 
