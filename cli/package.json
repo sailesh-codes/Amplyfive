@@ -1,10 +1,10 @@
 {
   "name": "amplyfive",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Install Amplyfive AI agent skills into any coding agent — Claude Code, Cursor, Codex, Gemini CLI, Windsurf, Cline, Copilot, Aider, Devin, Zed",
   "type": "module",
   "bin": {
-    "amplyfive": "./bin/amplyfive.js"
+    "amplyfive": "bin/amplyfive.js"
   },
   "scripts": {
     "sync": "node scripts/sync.js",
@@ -17,7 +17,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/sailesh-codes/Amplyfive"
+    "url": "git+https://github.com/sailesh-codes/Amplyfive.git"
   },
   "homepage": "https://amplyfive.vercel.app",
   "keywords": [

@@ -5,6 +5,8 @@
  * Uses raw ANSI escape codes — zero dependencies.
  */
 
+import readline from 'node:readline';
+
 // ── ANSI Colors ──────────────────────────────────────────────────────
 const ESC = '\x1b[';
 const RESET = `${ESC}0m`;
@@ -123,6 +125,111 @@ function stripAnsi(str) {
 export function printSection(title) {
   console.log(`  ${colors.bold(colors.white(title))}`);
   console.log('');
+}
+
+// ── Interactive Multi-Select Prompt ─────────────────────────────────
+export async function promptMultiSelect({ message, choices, defaultChecked = [] }) {
+  if (!process.stdin.isTTY) {
+    return choices.filter(c => defaultChecked.includes(c.key) || c.detected);
+  }
+
+  return new Promise((resolve) => {
+    readline.emitKeypressEvents(process.stdin);
+    if (process.stdin.isRaw !== undefined) {
+      process.stdin.setRawMode(true);
+    }
+    process.stdin.resume();
+
+    // Hide terminal cursor during interactive selection
+    process.stdout.write('\x1b[?25l');
+
+    let cursor = 0;
+    const items = choices.map(c => ({
+      ...c,
+      checked: c.checked !== undefined ? c.checked : defaultChecked.includes(c.key),
+    }));
+
+    let isFirstRender = true;
+    let renderedLineCount = 0;
+
+    function render() {
+      if (!isFirstRender && renderedLineCount > 0) {
+        process.stdout.write(`\x1b[${renderedLineCount}A\r\x1b[0J`);
+      }
+      isFirstRender = false;
+
+      const lines = [];
+      lines.push(`  ${colors.cyan('?')} ${colors.bold(message)} ${colors.dim('(Space: toggle, a: all, Enter: confirm)')}`);
+      lines.push('');
+
+      items.forEach((item, idx) => {
+        const isCurrent = idx === cursor;
+        const pointer = isCurrent ? colors.cyan('❯') : ' ';
+        const checkbox = item.checked ? colors.green('●') : colors.gray('○');
+        const name = isCurrent
+          ? colors.bold(colors.cyan(item.name))
+          : (item.checked ? colors.white(item.name) : colors.dim(item.name));
+        const badge = item.detected ? colors.dim(colors.green(' (detected)')) : '';
+
+        lines.push(`  ${pointer} [${checkbox}] ${name}${badge}`);
+      });
+
+      lines.push('');
+      renderedLineCount = lines.length;
+      process.stdout.write(lines.join('\n'));
+    }
+
+    render();
+
+    function cleanup() {
+      process.stdout.write('\x1b[?25h'); // Restore cursor
+      process.stdin.removeListener('keypress', onKeypress);
+      if (process.stdin.setRawMode) {
+        process.stdin.setRawMode(false);
+      }
+      process.stdin.pause();
+    }
+
+    function onKeypress(str, key) {
+      if (!key) return;
+
+      if (key.ctrl && key.name === 'c') {
+        cleanup();
+        process.stdout.write('\n');
+        process.exit(0);
+      }
+
+      if (key.name === 'up' || (key.name === 'k' && !str)) {
+        cursor = (cursor - 1 + items.length) % items.length;
+        render();
+      } else if (key.name === 'down' || (key.name === 'j' && !str)) {
+        cursor = (cursor + 1) % items.length;
+        render();
+      } else if (key.name === 'space' || str === ' ') {
+        items[cursor].checked = !items[cursor].checked;
+        render();
+      } else if (str === 'a' || str === 'A') {
+        const allChecked = items.every(i => i.checked);
+        items.forEach(i => i.checked = !allChecked);
+        render();
+      } else if (str && str >= '1' && Number(str) <= items.length) {
+        const idx = Number(str) - 1;
+        items[idx].checked = !items[idx].checked;
+        cursor = idx;
+        render();
+      } else if (key.name === 'return' || key.name === 'enter') {
+        cleanup();
+        if (renderedLineCount > 0) {
+          process.stdout.write(`\x1b[${renderedLineCount}A\r\x1b[0J`);
+        }
+
+        const selected = items.filter(i => i.checked);
+        resolve(selected);
+      }
+    }
+
+    process.stdin.on('keypress', onKeypress);
+  });
 }
 
 // ── Misc ─────────────────────────────────────────────────────────────

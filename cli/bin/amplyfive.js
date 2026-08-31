@@ -20,11 +20,16 @@
 
 import { readFileSync, writeFileSync, mkdirSync, existsSync, unlinkSync, rmSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { SKILLS, getSkillUrl, getAvailableSkills, getSkillsByCategory } from '../lib/registry.js';
 import { AGENTS, detectAgents, getAgent, getAgentKeys } from '../lib/agents.js';
 import { getSkillContent } from '../lib/fetch.js';
 import { transformContent, removeDelimitedBlock, hasDelimitedBlock } from '../lib/transform.js';
-import { printBanner, success, error, warn, info, skip, createSpinner, printTable, printSection, newline, colors } from '../lib/ui.js';
+import { printBanner, success, error, warn, info, skip, createSpinner, printTable, printSection, newline, colors, promptMultiSelect } from '../lib/ui.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const pkg = JSON.parse(readFileSync(resolve(__dirname, '..', 'package.json'), 'utf8'));
 
 // ── Parse CLI args ───────────────────────────────────────────────────
 const args = process.argv.slice(2);
@@ -81,7 +86,7 @@ const customDir = getFlagValue('dir');
 
 // ── Version ──────────────────────────────────────────────────────────
 if (isVersion) {
-  console.log('amplyfive v1.0.0');
+  console.log(`amplyfive v${pkg.version}`);
   process.exit(0);
 }
 
@@ -246,14 +251,14 @@ async function cmdAdd() {
   printBanner();
 
   // Resolve which agents to install into
-  const agents = resolveTargetAgents();
+  const agents = await resolveTargetAgents('install into');
 
   if (agents.length === 0) {
-    error('No target agents found.');
-    info(`No agents detected on this machine. Use ${colors.yellow('--agent <name>')} to specify one.`);
+    warn('No agents selected.');
+    info(`Use ${colors.yellow('--agent <name>')} to target specific agents directly.`);
     info(`Run ${colors.cyan('npx amplyfive agents')} to see supported agents.`);
     newline();
-    process.exit(1);
+    process.exit(0);
   }
 
   printSection(`Installing ${commandArgs.length} skill(s) → ${agents.map(a => a.name).join(', ')}`);
@@ -320,7 +325,12 @@ async function cmdRemove() {
 
   printBanner();
 
-  const agents = resolveTargetAgents();
+  const agents = await resolveTargetAgents('remove from');
+  if (agents.length === 0) {
+    warn('No agents selected.');
+    newline();
+    process.exit(0);
+  }
   const skillName = commandArgs[0];
 
   printSection(`Removing ${colors.cyan(skillName)}`);
@@ -347,9 +357,10 @@ async function cmdRemove() {
 
 /**
  * Resolve which agents to install into.
- * Priority: --agent flags > auto-detect
+ * Priority: --agent flags > interactive checklist (Option A) > auto-detect fallback
  */
-function resolveTargetAgents() {
+async function resolveTargetAgents(action = 'install into') {
+  // If user passed --agent <name> flag(s), use them directly
   if (targetAgents.length > 0) {
     const resolved = [];
     for (const key of targetAgents) {
@@ -363,13 +374,27 @@ function resolveTargetAgents() {
     return resolved;
   }
 
-  // Auto-detect
-  const detected = detectAgents();
-  if (detected.length > 0) {
-    info(`Auto-detected: ${detected.map(a => colors.cyan(a.name)).join(', ')}`);
-    newline();
-  }
-  return detected;
+  // Interactive Checklist Prompt (Option A)
+  const choices = Object.values(AGENTS).map(agent => {
+    let detected = false;
+    try { detected = agent.detect(); } catch {}
+    return {
+      key: agent.key,
+      name: agent.name,
+      detected,
+      checked: detected, // Pre-checked if detected on machine
+    };
+  });
+
+  // Sort detected agents to the top
+  choices.sort((a, b) => (b.detected ? 1 : 0) - (a.detected ? 1 : 0));
+
+  const selectedChoices = await promptMultiSelect({
+    message: `Select AI coding agent(s) to ${action}:`,
+    choices,
+  });
+
+  return selectedChoices.map(c => getAgent(c.key)).filter(Boolean);
 }
 
 /**

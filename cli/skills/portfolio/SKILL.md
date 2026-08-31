@@ -11,7 +11,7 @@ description: Builds and improves distinctive portfolio websites. Audits existing
 3. Decide — define the portfolio purpose, audience, strengths, proof strategy, and visual direction.
 4. Fix — apply targeted upgrades using the existing stack.
 5. Verify — test desktop, mobile, accessibility, clarity, and contact paths.
- 
+
 ## New-project questions
 Only ask these when the repository has no usable project code:
 
