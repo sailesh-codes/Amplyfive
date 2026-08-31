@@ -37,6 +37,13 @@ export const SKILLS = {
     description: 'Builds high-impact web developer portfolio frontends. Eliminates cliché AI templates (terminal typing, skill bars, neon glows) and elevates code proof and technical depth.',
     available: true,
   },
+  'brand-design': {
+    name: 'brand-design',
+    category: 'Page / Landing',
+    path: 'page-niche-specific/landing-page/brand-design/SKILL.md',
+    description: 'Premium brand-kit image generation and design skill for high-end brand-guidelines boards, logo systems, and visual identity decks.',
+    available: true,
+  },
   'admin-dashboard': {
     name: 'admin-dashboard',
     category: 'Page / Landing',

@@ -6,6 +6,11 @@
   "bin": {
     "amplyfive": "./bin/amplyfive.js"
   },
+  "scripts": {
+    "sync": "node scripts/sync.js",
+    "test": "node test/run_tests.js",
+    "prepublishOnly": "node scripts/sync.js"
+  },
   "license": "MIT",
   "engines": {
     "node": ">=18"

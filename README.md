@@ -62,6 +62,7 @@ Amplyfive works with **10 AI coding agents** out of the box:
 - **e-commerce** – E-commerce frontends with catalog presentation, cart/checkout friction reduction, and trust signals
 - **portfolio** – Distinctive portfolio websites with work presentation adapted to the owner and audience
 - **web-dev-portfolio** – Web developer portfolio frontends that eliminate AI template clichés and elevate technical depth
+- **brand-design** – Premium brand-kit image generation, logo systems, and visual identity guidelines
 - **admin-dashboard** – Admin dashboard patterns *(coming soon)*
 
 ### Animation

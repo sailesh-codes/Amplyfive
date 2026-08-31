@@ -90,7 +90,7 @@ if (isHelp || !command) {
   printBanner();
   console.log(colors.bold('  USAGE'));
   console.log('');
-  console.log(`    ${colors.cyan('amplyfive')} ${colors.green('<command>')} ${colors.gray('[options]')}`);
+  console.log(`    ${colors.cyan('npx amplyfive')} ${colors.green('<command>')} ${colors.gray('[options]')}`);
   console.log('');
   console.log(colors.bold('  COMMANDS'));
   console.log('');
@@ -143,7 +143,7 @@ try {
     default:
       printBanner();
       error(`Unknown command: ${colors.bold(command)}`);
-      info(`Run ${colors.cyan('amplyfive --help')} for usage.`);
+      info(`Run ${colors.cyan('npx amplyfive --help')} for usage.`);
       newline();
       process.exit(1);
   }
@@ -191,7 +191,7 @@ function cmdList() {
 
   const available = getAvailableSkills();
   info(`${available.length} skills ready to install. ${Object.keys(SKILLS).length - available.length} coming soon.`);
-  info(`Run ${colors.cyan('amplyfive add <skill>')} to install.`);
+  info(`Run ${colors.cyan('npx amplyfive add <skill>')} to install.`);
   newline();
 }
 
@@ -238,7 +238,7 @@ async function cmdAdd() {
   if (commandArgs.length === 0) {
     printBanner();
     error('No skill name provided.');
-    info(`Run ${colors.cyan('amplyfive list')} to see available skills.`);
+    info(`Run ${colors.cyan('npx amplyfive list')} to see available skills.`);
     newline();
     process.exit(1);
   }
@@ -251,7 +251,7 @@ async function cmdAdd() {
   if (agents.length === 0) {
     error('No target agents found.');
     info(`No agents detected on this machine. Use ${colors.yellow('--agent <name>')} to specify one.`);
-    info(`Run ${colors.cyan('amplyfive agents')} to see supported agents.`);
+    info(`Run ${colors.cyan('npx amplyfive agents')} to see supported agents.`);
     newline();
     process.exit(1);
   }
@@ -265,7 +265,7 @@ async function cmdAdd() {
 
     if (!skill) {
       error(`Unknown skill: ${colors.bold(skillName)}`);
-      info(`Run ${colors.cyan('amplyfive list')} to see available skills.`);
+      info(`Run ${colors.cyan('npx amplyfive list')} to see available skills.`);
       continue;
     }
 
@@ -313,6 +313,7 @@ async function cmdRemove() {
   if (commandArgs.length === 0) {
     printBanner();
     error('No skill name provided.');
+    info(`Run ${colors.cyan('npx amplyfive remove <skill>')} to remove a skill.`);
     newline();
     process.exit(1);
   }
