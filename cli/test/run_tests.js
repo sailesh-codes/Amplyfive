@@ -25,3 +25,4 @@ for (const cmd of commands) {
     if (err.stderr) console.error(err.stderr);
   }
 }
+
