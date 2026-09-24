@@ -35,7 +35,7 @@ export function printBanner() {
   console.log('');
   console.log(colors.bold(colors.cyan('AMP UP')) + colors.dim(' — AI agent skill installer'));
   console.log('');
-  console.log(colors.bold('By Amplyfive'));
+  console.log(colors.bold('By Amplyfive (Code Craft)'));
   console.log('');
 }
 
