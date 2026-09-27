@@ -85,9 +85,6 @@ Amplyfive works with **10 AI coding agents** out of the box:
 - **Full-stack developers** – Maintain consistency across the entire stack
 - **Development teams** – Establish shared patterns and reduce code review friction
 
-## Website
-
-Visit [amplyfive.vercel.app](https://amplyfive.vercel.app) for the full documentation, skill previews, and interactive examples.
 
 ## Contributing
 
