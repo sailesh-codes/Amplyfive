@@ -48,8 +48,8 @@ export const SKILLS = {
     name: 'admin-dashboard',
     category: 'Page / Landing',
     path: 'page-niche-specific/landing-page/admin-dashboard/SKILL.md',
-    description: 'Admin dashboard frontend patterns and best practices.',
-    available: false, // Placeholder — no content yet
+    description: 'Universal admin dashboard and back-office console with server-side route guards, RBAC, data tables, media management, and multi-domain adaptability.',
+    available: true,
   },
 
   // ── Animation Skills ───────────────────────────────────────────────
