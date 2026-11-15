@@ -1,3 +1,10 @@
+<!--
+=============================================================================
+[DISABLED] RWAF INTEGRATION SKILL (TEMPORARILY DISABLED)
+This skill is currently disabled and must NOT be linked or published to npm.
+All contents below are commented out until officially enabled.
+=============================================================================
+
 ---
 name: rwaf-integration
 description: Integrate RWAF (Reusable Web Application Firewall) into a Next.js application. Covers middleware setup, optional per-route integrations (Auth Guard, SSRF Guard), and frontend CSRF handling. Use this whenever a user asks to add RWAF, a firewall, or WAF protection to a project.
@@ -166,4 +173,4 @@ After integration, confirm:
 - Writing the app's own credential-checking logic (Step 2 assumes it already exists)
 - Building custom blocked-response pages (RWAF ships default pages; see README for the `onBlock` override if custom pages are wanted)
 - Dashboard setup/authentication (separate from this integration; see RWAF's dashboard README)
-
+-->

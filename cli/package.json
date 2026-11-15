@@ -1,6 +1,6 @@
 {
   "name": "amplyfive",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Install Amplyfive AI agent skills into any coding agent — Claude Code, Cursor, Codex, Gemini CLI, Windsurf, Cline, Copilot, Aider, Devin, Zed",
   "type": "module",
   "bin": {

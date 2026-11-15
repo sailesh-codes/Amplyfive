@@ -52,6 +52,15 @@ export const SKILLS = {
     available: true,
   },
 
+  // ── Security Skills (DISABLED - Do not link to npm) ───────────────
+  // 'rwaf-integration': {
+  //   name: 'rwaf-integration',
+  //   category: 'Security',
+  //   path: 'security/basic_requirements/RWAF/SKILL.md',
+  //   description: 'Integrate RWAF (Reusable Web Application Firewall) into a Next.js application.',
+  //   available: false,
+  // },
+
   // ── Animation Skills ───────────────────────────────────────────────
   'gsap': {
     name: 'gsap',
