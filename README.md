@@ -65,6 +65,9 @@ Amplyfive works with **10 AI coding agents** out of the box:
 - **brand-design** – Premium brand-kit image generation, logo systems, and visual identity guidelines
 - **admin-dashboard** – Universal admin dashboard and back-office consoles with server-side route guards, RBAC, universal data tables, and media management
 
+### Core / De-AI
+- **un-ai** – De-AI refactoring skill that strips generic AI slop (emojis, neon gradients, repetitive card dumps, fake pulsing badges, hollow copy) and elevates any web interface to senior human craft
+
 ### Animation
 - **gsap** – GSAP animation patterns with ScrollTrigger and timeline orchestration *(coming soon)*
 - **framer** – Framer Motion patterns for React *(coming soon)*

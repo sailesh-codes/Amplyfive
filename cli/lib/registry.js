@@ -52,6 +52,15 @@ export const SKILLS = {
     available: true,
   },
 
+  // ── Core / De-AI Skills ────────────────────────────────────────────
+  'un-ai': {
+    name: 'un-ai',
+    category: 'Core / De-AI',
+    path: 'un-ai/SKILL.md',
+    description: 'De-AI refactoring skill. Eliminates AI slop (emojis, neon gradients, card dumps, fake badges, hollow copy) and elevates any web interface to senior human craft.',
+    available: true,
+  },
+
   // ── Security Skills (DISABLED - Do not link to npm) ───────────────
   // 'rwaf-integration': {
   //   name: 'rwaf-integration',
